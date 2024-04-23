@@ -1,0 +1,184 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+//declaring const because of the day of reckoning
+//this will help change the values when my teacher asks i think idk
+#define max_name 40
+#define max_number 9
+#define max_DDD 3
+#define max_contacts 5
+int num_contacts=0;
+
+//test out functions
+
+
+//struct
+struct contato{
+  char name[max_name], number[max_number], DDD[max_DDD];
+};
+ 
+void deleteContact(struct contato contatos[], int index) {
+      for (int i = index; i < num_contacts - 1; i++) {
+          strcpy(contatos[i].name, contatos[i + 1].name);
+          strcpy(contatos[i].DDD, contatos[i + 1].DDD);
+          strcpy(contatos[i].number, contatos[i + 1].number);
+      }
+      num_contacts--;
+}
+int main() {
+  // declaring variables
+  struct contato contatos[max_contacts];
+  char searchDDD[max_DDD];
+  int index, loop=0, choice;
+  // main code
+  while (loop == 0) {
+    // menu
+    printf("------Lista~Telefônica------\n");
+    printf("|   1. Adicionar contato   |\n");
+    printf("|   2. Mostrar contatos    |\n");
+    printf("|   3. Apagar contatos     |\n");
+    printf("|   4. Buscar contatos     |\n");
+    printf("|   5. Editar contato      |\n");
+    printf("    9. Apagar tudo         |\n");
+    printf("|   0. Sair                |\n");
+    printf("----------------------------\n");
+    printf("\n\nEscolha uma opção: ");
+    scanf("%d", &choice);
+    // switch case function that reads the user's choice
+    
+    switch (choice){
+      case 1:
+        //done maybe
+      if(num_contacts < max_contacts){
+        printf("Digite o nome do contato: \n");
+        scanf("%s", contatos[num_contacts].name);
+        if(strlen(contatos[num_contacts].name) > max_name){
+          printf("Nome muito grande, tente novamente\n");
+          memset(contatos[num_contacts].name, 0, sizeof(contatos[num_contacts].name));
+          break;
+        }
+        printf("Digite o DDD do contato: \n");
+        scanf("%s", contatos[num_contacts].DDD);
+        if(strlen(contatos[num_contacts].DDD) > 3){
+          printf("DDD inválido");
+          memset(contatos[num_contacts].DDD, 0, sizeof(contatos[num_contacts].DDD));
+          break;
+        }
+        printf("Digite o número do contato: \n");
+        scanf("%s", contatos[num_contacts].number);
+        if(strlen(contatos[num_contacts].number) > max_number){
+          printf("Número muito grande, tente novamente\n");
+          memset(contatos[num_contacts].number, 0, sizeof(contatos[num_contacts].number));
+          break;
+        }
+        num_contacts++;
+      } else {
+        printf("\n\nNão há espaço para mais contatos.\n");
+      }
+      break;
+      
+      case 2:
+      //done i think
+        if(num_contacts==0){
+          printf("A lista esta vazia.\n\n");
+        } else{
+          printf("Lista de contatos\n\n");
+          for(int i=0; i<num_contacts; i++){
+            printf("Contato %d:\n", i);
+          printf(" Nome: %s\nNumero: %s+ %s\n\n", contatos[i].name, contatos[i].DDD, contatos[i].number);  
+            }
+        }
+      break;
+      case 3:
+      //done i think
+      if (num_contacts == 0) {
+          printf("A lista está vazia.\n\n");
+      } else {
+          printf("Digite o índice do contato que deseja apagar: ");
+          scanf("%d", &index);
+          if (index >= 0 && index < num_contacts) {
+              deleteContact(contatos, index);
+              printf("Contato apagado com sucesso.\n");
+          } else {
+              printf("Índice inválido.\n");
+          }
+      }
+      break;
+
+      case 4:
+      //search for a contact in the contact list
+      if (num_contacts == 0){
+        printf("A lista está vazia.\n\n");
+        break;
+      } else{
+        //search based on the DDD(region code) of the person
+        printf("Digite o DDD da pessoa que deseja buscar: ");
+        scanf("%s", searchDDD);
+        for (int i = 0; i < num_contacts; i++){
+          if (strcmp(contatos[i].DDD, searchDDD) == 0){
+            printf("Contato(s) encontrado(s):\n");
+            printf("Nome: %s\nNumero: %s+ %s\n\n", contatos[i].name, contatos[i].DDD, contatos[i].number); 
+          }
+        }
+          }  
+      break;
+      
+      case 5:
+      //edit a contact in the list
+        if (num_contacts == 0) {
+            printf("A lista está vazia.\n\n");
+          break;
+        } else {
+            printf("Digite o índice do contato que deseja editar: ");
+            scanf("%d", &index);
+            if (index >= 0 && index < num_contacts) {
+                deleteContact(contatos, index);
+            } else {
+                printf("Índice inválido.\n");
+              break;
+            }
+        }
+        
+        if(num_contacts < max_contacts){
+          printf("Digite o nome do novo contato: \n");
+          scanf("%s", contatos[num_contacts].name);
+          if(strlen(contatos[num_contacts].name) > max_name){
+            printf("Nome muito grande, tente novamente\n");
+            memset(contatos[num_contacts].name, 0, sizeof(contatos[num_contacts].name));
+            break;
+          }
+          printf("Digite o DDD do novo contato: \n");
+          scanf("%s", contatos[num_contacts].DDD);
+          if(strlen(contatos[num_contacts].DDD) > 3){
+            printf("DDD inválido");
+            memset(contatos[num_contacts].DDD, 0, sizeof(contatos[num_contacts].DDD));
+            break;
+          }
+          printf("Digite o número do novo contato: \n");
+          scanf("%s", contatos[num_contacts].number);
+          if(strlen(contatos[num_contacts].number) > max_number){
+            printf("Número muito grande, tente novamente\n");
+            memset(contatos[num_contacts].number, 0, sizeof(contatos[num_contacts].number));
+            break;
+          }
+          num_contacts++;
+        }
+      break;
+      case 9:
+      for(int i=0; i<num_contacts; i++){
+        deleteContact(contatos, index);
+      }
+      break;
+      
+      case 0:
+      printf("\n\nAté mais.");
+        loop=1970;
+      break; 
+      
+      default:
+      printf("Não é umas das opções validas.\n\n");
+      break;
+
+    } 
+  }
+}
