@@ -10,8 +10,6 @@
 int num_contacts=0;
 
 //test out functions
-
-
 //struct
 struct contato{
   char name[max_name], number[max_number], DDD[max_DDD];
@@ -138,7 +136,6 @@ int main() {
               break;
             }
         }
-        
         if(num_contacts < max_contacts){
           printf("Digite o nome do novo contato: \n");
           scanf("%s", contatos[num_contacts].name);
